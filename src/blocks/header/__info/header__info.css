@@ -1,0 +1,8 @@
+.header__info {
+    display: flex;
+    max-width: 221px;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    margin-top: 6px;
+}

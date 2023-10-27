@@ -8,7 +8,7 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import ImagePopup from "./ImagePopup";
 import Login from "./Login";
-import Register from "./Register";
+//import Register from "./Register";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 function App() {
@@ -116,13 +116,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={loggedIn ? <Navigate to="/sign-in" replace /> : <Navigate to="/sign-up" replace />}></Route>
-        <Route path="/sign-up" element={<Login />}></Route>
-        <Route path="/sign-in" element={<Register />}></Route>
-      </Routes>
-      <CurrentUserContext.Provider value={currentUser}>
-        <Header />
-        <Main
+        <Route path="/" element={loggedIn ? <Main
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
@@ -130,7 +124,10 @@ function App() {
           onCardClick={handleCardClick}
           onLikeClick={handleCardLike}
           onCardDelete={handleCardDelete}
-        />
+        /> : <Navigate to="/sign-up" replace />}></Route>
+        <Route path="/sign-up" element={<Login />}></Route>
+      </Routes>
+      <CurrentUserContext.Provider value={currentUser}>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
         <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
