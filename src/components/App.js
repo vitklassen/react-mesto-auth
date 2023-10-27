@@ -11,6 +11,7 @@ import Login from "./Login";
 //import Register from "./Register";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import Register from "./Register";
 function App() {
   const [isEditProfilePopupOpen, setEditProfile] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlace] = React.useState(false);
@@ -124,8 +125,9 @@ function App() {
           onCardClick={handleCardClick}
           onLikeClick={handleCardLike}
           onCardDelete={handleCardDelete}
-        /> : <Navigate to="/sign-up" replace />}></Route>
-        <Route path="/sign-up" element={<Login />}></Route>
+        /> : <Navigate to="/sign-in" replace />}></Route>
+        <Route path="/sign-in" element={<Login />}></Route>
+        <Route path="/sign-up" element={<Register />}></Route>
       </Routes>
       <CurrentUserContext.Provider value={currentUser}>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />

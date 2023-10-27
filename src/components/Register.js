@@ -1,33 +1,21 @@
-function Register(props) {
-    return (
-      <div
-        className={`popup ${props.isOpen ? "popup_opened" : ""} popup_type_${
-          props.name
-        }`}
-      >
-        <div className={`popup__container popup__container_type_${props.name}`}>
-          <button
-            className="popup__close-button"
-            type="button"
-            onClick={props.onClose}
-          ></button>
-          <h2 className={`popup__title popup__title_type_${props.name}`}>
-            {props.title}
-          </h2>
-          <form
-            className={`popup__form popup__form_type_${props.name}`}
-            name={props.name}
-            method="post"
-            noValidate
-            onSubmit={props.onSubmit}
-          >
-            {props.children}
-            <button className="popup__save-button button-style" type="submit">
-              {props.textSaveButton}
-            </button>
-          </form>
-        </div>
-      </div>
-    );
-  }
-  export default Register;
+import { Link } from "react-router-dom";
+import Header from "./Header";
+import Form from "./Form";
+function Register() {
+  return (
+    <>
+      <Header email="" path="sign-in" text="Войти" />
+      <Form
+        title="Регистрация"
+        buttonText="Зарегестрироваться"
+        type="register"
+        children={
+          <Link className="userform__description" to="/sign-in">
+            Уже зарегестрированы? Войти
+          </Link>
+        }
+      />
+    </>
+  );
+}
+export default Register;

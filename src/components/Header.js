@@ -9,7 +9,6 @@ function Header(props) {
         <Link className="header__link" to={`/${props.path}`}>
           {props.text}
         </Link>
-        <button></button>
       </div>
     </header>
   );
