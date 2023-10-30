@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import Main from "./Main";
 import Footer from "./Footer";
 import AddPlacePopup from "./AddPlacePopup";
@@ -11,11 +11,14 @@ import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
 import DeleteCardPopup from "./DeleteCardPopup";
 import api from "../utils/Api";
+import * as auth from "./Auth"
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 function App() {
+  const navigate = useNavigate();
   const [isEditProfilePopupOpen, setEditProfile] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlace] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatar] = React.useState(false);
+  const [userEmail, setUserEmail] = React.useState('');
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({
     visible: false,
@@ -122,11 +125,30 @@ function App() {
         console.log(error);
       });
   }
+  function handleLogin() {
+    setLoggedIn(true);
+  }
+  const checkToken = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt){ 
+      auth.tokenCheck(jwt)
+      .then((res) => {
+        if(res) {
+          setLoggedIn(true);
+          setUserEmail(res.email);
+          navigate('/', {replace: true});
+        }
+      })
+    }
+  }
   React.useEffect(() => {
     getUserInfo();
   }, []);
   React.useEffect(() => {
     getAllCards();
+  }, []);
+  React.useEffect(() => {
+    checkToken();
   }, []);
   return (
     <>
@@ -144,6 +166,7 @@ function App() {
                   onCardClick={handleCardClick}
                   onLikeClick={handleCardLike}
                   onCardDelete={handleCardDelete}
+                  userEmail={userEmail}
                 />
               ) : (
                 <Navigate to="/sign-in" replace />
@@ -163,13 +186,14 @@ function App() {
                     onCardClick={handleCardClick}
                     onLikeClick={handleCardLike}
                     onCardDelete={handleCardDelete}
+                    userEmail={userEmail}
                   />
                 }
                 loggedIn={loggedIn}
               />
             }
           />
-          <Route path="/sign-in" element={<Login />}></Route>
+          <Route path="/sign-in" element={<Login handleLogin={handleLogin}/>}></Route>
           <Route path="/sign-up" element={<Register />}></Route>
         </Routes>
         <EditProfilePopup
