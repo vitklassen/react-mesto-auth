@@ -50,5 +50,7 @@ export function tokenCheck(token) {
     }
   })
   .then(res => res.json())
-  .then(data => data)
+  .catch((err) => {
+    console.log(err);
+  })
 }
