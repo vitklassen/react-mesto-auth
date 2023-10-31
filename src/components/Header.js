@@ -7,7 +7,6 @@ function Header(props) {
       localStorage.removeItem('jwt');
     }
     navigate(`/${props.path}`, {replace: true});
-    console.log(props.email)
   }
   return (
     <header className="header">

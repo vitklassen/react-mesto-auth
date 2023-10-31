@@ -9,16 +9,7 @@ export function register(password, email) {
     body: JSON.stringify({ password: password, email: email }),
   })
     .then((response) => {
-      try {
-        if (response.status === 200) {
-          return response.json();
-        }
-      } catch (e) {
-        return e;
-      }
-    })
-    .then((res) => {
-      return res;
+      return response.json();
     })
     .catch((err) => console.log(err));
 }

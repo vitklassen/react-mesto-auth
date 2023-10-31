@@ -10,6 +10,7 @@ import Login from "./Login";
 import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
 import DeleteCardPopup from "./DeleteCardPopup";
+import InfoTooltip from "./InfoTooltip";
 import api from "../utils/Api";
 import * as auth from "./Auth"
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -20,6 +21,8 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatar] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [isInfoTooltip, setInfoTooltip] = React.useState(false);
+  const [isRegister, setRegister] = React.useState(false)
   const [selectedCard, setSelectedCard] = React.useState({
     visible: false,
     link: "",
@@ -36,12 +39,22 @@ function App() {
   const handleAddPlaceClick = () => {
     setAddPlace(true);
   };
+  const openInfoTooltip = () => {
+    setInfoTooltip(true);
+  }
+  const handleRegister = (result) => {
+    setRegister(result);
+  }
   const closeAllPopups = () => {
     setEditAvatar(false);
     setAddPlace(false);
     setEditProfile(false);
+    setInfoTooltip(false);
     setSelectedCard({ visible: false, link: "", name: "" });
   };
+  const setEmail = (email) => {
+    setUserEmail(email);
+  }
   const handleCardClick = (link, name) => {
     setSelectedCard({ visible: true, link: link, name: name });
   };
@@ -135,7 +148,7 @@ function App() {
       .then((res) => {
         if(res) {
           handleLogin();
-          setUserEmail(res.data.email);
+          setEmail(res.data.email);
           navigate('/', {replace: true});
         }
       })
@@ -176,8 +189,8 @@ function App() {
               />
             }
           />
-          <Route path="/sign-in" element={<Login handleLogin={handleLogin} setUserEmail={setUserEmail}/>}></Route>
-          <Route path="/sign-up" element={<Register />}></Route>
+          <Route path="/sign-in" element={<Login handleLogin={handleLogin} setUserEmail={setEmail}/>}></Route>
+          <Route path="/sign-up" element={<Register openInfoTooltip={openInfoTooltip} handleRegister={handleRegister}/>}></Route>
         </Routes>
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
@@ -197,6 +210,7 @@ function App() {
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <Footer />
         <DeleteCardPopup />
+        <InfoTooltip onClose={closeAllPopups} isRegister={isRegister} isOpen={isInfoTooltip}/>
       </CurrentUserContext.Provider>
     </>
   );
