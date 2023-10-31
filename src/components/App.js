@@ -130,12 +130,11 @@ function App() {
   }
   const checkToken = () => {
     const jwt = localStorage.getItem('jwt');
-    console.log(jwt)
     if (jwt){ 
       auth.tokenCheck(jwt)
       .then((res) => {
         if(res) {
-          setLoggedIn(true);
+          handleLogin();
           setUserEmail(res.data.email);
           navigate('/', {replace: true});
         }
@@ -156,45 +155,28 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
           <Route
-            path="/"
+            path="*"
             element={
-              loggedIn ? (
-                <Main
-                  onEditAvatar={handleEditAvatarClick}
-                  onEditProfile={handleEditProfileClick}
-                  onAddPlace={handleAddPlaceClick}
-                  cards={cards}
-                  onCardClick={handleCardClick}
-                  onLikeClick={handleCardLike}
-                  onCardDelete={handleCardDelete}
-                  userEmail={userEmail}
-                />
-              ) : (
-                <Navigate to="/sign-in" replace />
-              )
-            }
+              loggedIn ? <Navigate to="/" replace /> : <Navigate to="/sign-in" replace /> }
           ></Route>
           <Route
             path="/"
             element={
               <ProtectedRoute
-                element={
-                  <Main
-                    onEditAvatar={handleEditAvatarClick}
-                    onEditProfile={handleEditProfileClick}
-                    onAddPlace={handleAddPlaceClick}
-                    cards={cards}
-                    onCardClick={handleCardClick}
-                    onLikeClick={handleCardLike}
-                    onCardDelete={handleCardDelete}
-                    userEmail={userEmail}
-                  />
-                }
+                element={Main}
                 loggedIn={loggedIn}
+                onEditAvatar={handleEditAvatarClick}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                cards={cards}
+                onCardClick={handleCardClick}
+                onLikeClick={handleCardLike}
+                onCardDelete={handleCardDelete}
+                userEmail={userEmail}
               />
             }
           />
-          <Route path="/sign-in" element={<Login handleLogin={handleLogin}/>}></Route>
+          <Route path="/sign-in" element={<Login handleLogin={handleLogin} setUserEmail={setUserEmail}/>}></Route>
           <Route path="/sign-up" element={<Register />}></Route>
         </Routes>
         <EditProfilePopup

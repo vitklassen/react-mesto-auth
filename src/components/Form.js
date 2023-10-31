@@ -17,7 +17,7 @@ function Form(props) {
           />
           <input
             className="userform__input userform__input_name_password"
-            type="text"
+            type="password"
             name="password"
             placeholder="Пароль"
             required
