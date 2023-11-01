@@ -2,7 +2,7 @@ function Form(props) {
   return (
     <div className={`userform userform_type_${props.type}`}>
       <h2 className="userform__title">{props.title}</h2>
-      <form className="userform__form" name="userform" method="post" noValidate onSubmit={props.onSubmit}>
+      <form className="userform__form" name="userform" method="post" onSubmit={props.onSubmit}>
           <input
             className="userform__input userform__input_name_userEmail"
             type="email"

@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "./Header";
 import Form from "./Form";
-import * as auth from "./Auth"
 function Register(props) {
-  const navigate = useNavigate();
   const [formValue, setFormValue] = useState({password: '', email: ''});
   function handleChange(e) {
     const {name, value} = e.target;
@@ -12,25 +10,7 @@ function Register(props) {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    auth.register(formValue.password, formValue.email)
-    .then((res) => {
-        try { 
-          if (res.data) {
-          navigate('/sign-in', {replace: true});
-          props.handleRegister(true);
-        }
-      }
-      catch(err) {
-        props.handleRegister(false);
-        console.log(err);
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-    .finally((res) => {
-      props.openInfoTooltip();
-    });
+    props.onRegister(formValue.password, formValue.email);
   }
   return (
     <>

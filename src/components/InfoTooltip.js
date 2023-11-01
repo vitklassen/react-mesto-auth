@@ -13,9 +13,9 @@ function InfoTooltip(props) {
           type="button"
           onClick={props.onClose}
         ></button>
-        <img className="popup__image" src={props.isRegister ? succesPath : errorPath} alt="Изображение" />
+        <img className="popup__image" src={props.isData ? succesPath : errorPath} alt="Изображение" />
         <h2 className={`popup__title popup__title_type_info`}>
-          {props.isRegister ? succes : error}
+          {props.isData ? succes : error}
         </h2>
       </div>
     </div>

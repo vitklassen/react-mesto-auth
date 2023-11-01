@@ -13,3 +13,8 @@ export const serverSettings = {
   token: 'fb89ac70-03c8-4c18-8ea3-b3d40a5cd400'
 }
 
+export const authSettings = {
+  baseUrl: 'https://auth.nomoreparties.co/',
+  header: 'application/json'
+}
+

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Form from "./Form";
-import * as auth from "./Auth";
 function Login(props) {
-  const navigate = useNavigate();
   const [formValue, setFormValue] = useState({ password: "", email: "" });
   function handleChange(e) {
     const { name, value } = e.target;
@@ -12,18 +9,8 @@ function Login(props) {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    auth.authorize(formValue.password, formValue.email)
-    .then((data) => {
-      if(data.token) {
-        props.setUserEmail(formValue.email);
-        setFormValue({ password: "", email: "" });
-        props.handleLogin();
-        navigate('/', {replace: true});
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    props.onLogin(formValue.password, formValue.email);
+    setFormValue({ password: "", email: "" });
   }
   return (
     <>
