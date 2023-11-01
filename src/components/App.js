@@ -59,6 +59,8 @@ function App() {
         localStorage.setItem("jwt", data.token);
         setUserEmail(email);
         setLoggedIn(true);
+        getUserInfo();
+        getAllCards();
         navigate("/", { replace: true });
       })
       .catch((err) => {
@@ -170,6 +172,8 @@ function App() {
         .then((res) => {
           setLoggedIn(true);
           setEmail(res.data.email);
+          getUserInfo();
+          getAllCards();
           navigate("/", { replace: true });
         })
         .catch((err) => {
@@ -177,11 +181,7 @@ function App() {
         });
     }
   }
-  useEffect(() => {
-    getUserInfo();
-    getAllCards();
-  }, []);
-
+ 
   useEffect(() => {
     setInfoTooltip(false);
     checkToken();
